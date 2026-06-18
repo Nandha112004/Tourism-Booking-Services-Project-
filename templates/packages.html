@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Packages</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #89fffd, #ef32d9);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin: 30px 0;
+            font-size: 3em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Package Container */
+        .packages-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Package Card */
+        .package-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image with Hover Zoom */
+        .package-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease, filter 0.5s;
+        }
+
+        .package-card:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.9);
+        }
+
+        /* Package Card Content */
+        .package-card h2 {
+            color: #ef32d9;
+            font-size: 24px;
+            margin: 15px 0;
+            background: linear-gradient(45deg, #ef32d9, #89fffd);
+            -webkit-background-clip: text; /* For WebKit-based browsers */
+            background-clip: text; /* Standard property for broader compatibility */
+            color: transparent;
+        }
+
+        .package-card p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+
+        /* Price Highlight */
+        .package-card p strong {
+            color: #333;
+        }
+
+        /* Book Now Button with Effects */
+        .book-now-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #89fffd, #ef32d9);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .book-now-btn:hover {
+            background: linear-gradient(45deg, #ef32d9, #89fffd);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* No Image Placeholder */
+        .no-image {
+            background: #ef32d9;
+            color: white;
+            padding: 50px 0;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                margin: 20px 0;
+            }
+
+            .package-card {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Available Packages</h1>
+    <div class="packages-container">
+        {% for package in packages %}
+            <div class="package-card">
+                <h2>{{ package.package_name }}</h2>
+                <p>Description: {{ package.package_description }}</p>
+                <p>Duration: {{ package.duration }}</p>
+                <p>Price: ${{ package.price }}</p>
+
+                {% if package.package_image and package.package_image != "no_image.png" %}
+                    <img src="{{ url_for('static', filename='Database_images/' + package.package_image) }}" 
+                         alt="{{ package.package_name }}">
+                {% else %}
+                    <div class="no-image">No Image Available</div>
+                {% endif %}
+                
+                <a href="{{ url_for('apply', package_id=package.id) }}" class="book-now-btn">Apply Now</a>
+            </div>
+        {% else %}
+            <p>No packages available at the moment.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

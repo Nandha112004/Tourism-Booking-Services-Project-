@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Package</title>
+
+    <style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Light gradient background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Ensures elements are stacked vertically */
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 32px;
+    text-transform: uppercase;
+    margin-bottom: 40px; /* Increased margin to give space between h1 and the form */
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Optional: adds subtle shadow */
+}
+
+.application-form-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+h3 {
+    color: #333;
+    margin-top: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px; /* Optional: adds spacing between letters */
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 12px;
+    text-align: left;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+    background: #ffffff;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #4facfe;
+    box-shadow: 0px 0px 8px rgba(79, 172, 254, 0.6);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+select {
+    cursor: pointer;
+    background-color: white;
+}
+
+button {
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.4s;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(79, 172, 254, 0.4);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    </style>
+
+</head>
+<body>
+
+<h1>Book Package: {{ package.package_name }}</h1>
+
+
+<div class="application-form-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+
+
+<div class="application-form-container">
+    <form method="POST">
+        <h3>User Details:</h3>
+        <p><strong>Name:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        
+
+        <h3>Package Details:</h3>
+        <p><strong>Package:</strong> {{ package.package_name }}</p>
+        <p><strong>Description:</strong> {{ package.package_description }}</p>
+        <p><strong>Duration:</strong> {{ package.duration }}</p>
+        <p><strong>Price:</strong> ${{ package.price }}</p>
+
+        <h3>Application Form:</h3>
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
+
+        <label for="mobile_number">Mobile Number:</label>
+        <input type="text" id="mobile_number" name="mobile_number" required>
+
+        <label for="email_address">Email Address:</label>
+        <input type="email" id="email_address" name="email_address" required>
+
+        <label for="country_of_residence">Country of Residence:</label>
+        <input type="text" id="country_of_residence" name="country_of_residence" required>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="payment_method">Payment Method:</label>
+        <select id="payment_method" name="payment_method" required>
+            <option value="default">--SELECT PAYMENT METHOD--</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="debit_card">Debit Card</option>
+            <option value="upi">UPI</option>
+        </select>
+
+        <label for="departure_date">Departure Date:</label>
+        <input type="date" id="departure_date" name="departure_date" required>
+
+        <label for="return_date">Return Date:</label>
+        <input type="date" id="return_date" name="return_date" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

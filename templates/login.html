@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🌐 Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+       /* 🌈 Body & Background */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Light gradient background */
+    overflow: hidden;
+}
+
+/* 🎨 Form Container */
+form {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* 💫 Background Animation */
+form::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
+    animation: rotate-bg 8s linear infinite;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+@keyframes rotate-bg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 📝 Form Heading */
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #ff758c, #ff7eb3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* 📑 Form Labels */
+label {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+    margin: 12px 0 5px;
+    color: #333;
+}
+
+/* 🔳 Input Fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background: #ffffff;
+    color: #333;
+    transition: 0.3s ease;
+}
+
+input:focus {
+    background: #f0f8ff;
+    border-color: #4facfe;
+    box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
+}
+
+/* 🚀 Button */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(79, 172, 254, 0.6);
+}
+
+/* 🔗 Links */
+p {
+    margin-top: 15px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 🚦 Alert Messages */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    animation: slide-down 0.5s ease, fade-out 6s ease forwards;
+}
+
+/* ❌ Error Message */
+.alert-error {
+    background: #f85032;
+    color: white;
+    border-left: 5px solid #e73827;
+}
+
+/* ✅ Success Message */
+.alert-success {
+    background: #56ab2f;
+    color: white;
+    border-left: 5px solid #3e8e41;
+}
+
+/* 🌐 Slide Down Animation */
+@keyframes slide-down {
+    0% { transform: translateY(-20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* 🌫 Fade Out Animation */
+@keyframes fade-out {
+    0%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h1>Login</h1>
+
+        <!-- 🌟 Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <label>Username</label>
+        <input type="text" name="username" required>
+        
+        <label>Password</label>
+        <input type="password" name="password" required>
+        
+        <button type="submit">Login</button>
+
+        <p><a href="{{ url_for('signup') }}">Don't have an account? Signup here</a></p>
+    </form>
+</body>
+</html>
